@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Text>Command JuneWPF</Text>
+    <Description>Some description for JuneWPF</Description>
+    <Assembly>JuneWPF\JuneWPF.dll</Assembly>
+    <FullClassName>JuneWPF.Command</FullClassName>
+    <ClientId>380f07db-2b87-4509-83f9-75c0cacda04c</ClientId>
+    <VendorId>com.typepad.thebuildingcoder</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
+  <AddIn Type="Application">
+    <Name>Application JuneWPF</Name>
+    <Assembly>JuneWPF\JuneWPF.dll</Assembly>
+    <FullClassName>JuneWPF.App</FullClassName>
+    <ClientId>2f84fb42-64f8-40a5-a52c-cec3e9e351f1</ClientId>
+    <VendorId>com.typepad.thebuildingcoder</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
+</RevitAddIns>
