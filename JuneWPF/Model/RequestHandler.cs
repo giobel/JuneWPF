@@ -15,6 +15,8 @@ namespace JuneWPF.Model
 
         public Element dwg { get; set; }
 
+        public Model.TextNoteObject.TextLeaderPosition NoteLeaderPosition {get; set;}
+
         public Request Request
         {
             get
@@ -39,7 +41,7 @@ namespace JuneWPF.Model
                         }
                     case Model.Request.RequestId.TextNote:
                         {
-                            Model.TextNoteObject.Place(uiapp);
+                            Model.TextNoteObject.Place(uiapp, NoteLeaderPosition);
                             break;
                         }
                     default:

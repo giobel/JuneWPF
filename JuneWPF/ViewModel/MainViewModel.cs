@@ -35,6 +35,9 @@ namespace JuneWPF.ViewModel
         public Model.DWGcontainer SelectedDWG { get; set; }
 
         private Model.RequestHandler handler { get; set; }
+
+        public bool TextArrowLeft { get; set; }
+        public bool TextArrowRight { get; set; }
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
@@ -118,7 +121,7 @@ namespace JuneWPF.ViewModel
 
             get
             {
-                return new RelayCommand(LaunchCommand, true);
+                return new RelayCommand(LaunchCommand);
             }
 
 
@@ -126,6 +129,24 @@ namespace JuneWPF.ViewModel
 
         private void LaunchCommand()
         {
+            if (TextArrowLeft && TextArrowRight)
+            {
+                handler.NoteLeaderPosition = Model.TextNoteObject.TextLeaderPosition.Both;
+            }
+            else if (TextArrowRight)
+            {
+                handler.NoteLeaderPosition = Model.TextNoteObject.TextLeaderPosition.Right;
+            }
+            else if (TextArrowLeft)
+            {
+                handler.NoteLeaderPosition = Model.TextNoteObject.TextLeaderPosition.Left;
+            }
+            else
+            {
+                handler.NoteLeaderPosition = Model.TextNoteObject.TextLeaderPosition.None;
+            }
+
+            
             MakeRequest(Model.Request.RequestId.TextNote);
             /*
             string textBox1 = "";

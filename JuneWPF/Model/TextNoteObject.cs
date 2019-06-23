@@ -4,14 +4,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
 namespace JuneWPF.Model
 {
-    class TextNoteObject
+    public class TextNoteObject
     {
-        public static void Place(UIApplication uiapp)
+        public enum TextLeaderPosition : int
+        {
+            Left = 0,
+            Right = 1,
+            Both = 2,
+            None = 3
+        }
+
+        public static void Place(UIApplication uiapp, TextLeaderPosition _textLeader)
         {
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Document doc = uidoc.Document;
@@ -44,11 +53,27 @@ namespace JuneWPF.Model
                     //double width = 3.0 / 12.0; // feet on paper
 
                     TextNoteOptions options = new TextNoteOptions();
-                    options.HorizontalAlignment = HorizontalTextAlignment.Center;
+                    options.HorizontalAlignment = HorizontalTextAlignment.Left;
+                    
                     options.TypeId = doc.GetDefaultElementTypeId(ElementTypeGroup.TextNoteType);
 
                     tran.Start();
                     TextNote note = TextNote.Create(doc, doc.ActiveView.Id, center, textNoteContent, options);
+
+                    if (_textLeader == TextLeaderPosition.Both)
+                    {
+                        note.AddLeader(TextNoteLeaderTypes.TNLT_STRAIGHT_L);
+                        note.AddLeader(TextNoteLeaderTypes.TNLT_STRAIGHT_R);
+                    }
+                    else if (_textLeader == TextLeaderPosition.Left)
+                    {
+                        note.AddLeader(TextNoteLeaderTypes.TNLT_STRAIGHT_L);
+                    }
+                    else if (_textLeader == TextLeaderPosition.Right)
+                    {
+                        note.AddLeader(TextNoteLeaderTypes.TNLT_STRAIGHT_R);
+                    }
+                    
                     tran.Commit();
                 }
                 else
