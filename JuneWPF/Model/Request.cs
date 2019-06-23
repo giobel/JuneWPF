@@ -31,6 +31,8 @@ namespace JuneWPF.Model
             /// "Delete" request
             /// </summary>
             Delete = 1,
+
+            TextNote = 2
            
         }
     }

@@ -87,8 +87,10 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Command.cs" />
+    <Compile Include="Model\DeleteDWG.cs" />
     <Compile Include="Model\DWGcontainer.cs" />
     <Compile Include="Model\FindDWG.cs" />
+    <Compile Include="Model\TextNoteObject.cs" />
     <Compile Include="Model\Request.cs" />
     <Compile Include="Model\RequestHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

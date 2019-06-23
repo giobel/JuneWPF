@@ -17,7 +17,7 @@
         <StackPanel Margin="10">
         
         <ProgressBar Value="{Binding Progress}" Height="25" Margin="10"/>
-        <Button Content="Button content1" Width="100" Height="35" Command="{Binding MyRelayCommand}"/>
+        <Button Content="Place TextNote" Width="100" Height="35" Command="{Binding PlaceTextNodeCommand}"/>
         <Separator Height="10"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Refresh DWG List" Width="100" Height="35" Command="{Binding SelectCommand}" Margin="5,0,5,0"/>

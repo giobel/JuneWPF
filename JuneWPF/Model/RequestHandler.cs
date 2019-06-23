@@ -23,15 +23,40 @@ namespace JuneWPF.Model
             }
         }
         public void Execute(UIApplication uiapp)
-        {   
-            Document doc = uiapp.ActiveUIDocument.Document;
-
-            using (Transaction transaction = new Transaction(doc))
+        {
+            try
             {
-                transaction.Start("DeleteDWG");
-                doc.Delete(dwg.Id);
-                transaction.Commit();
+                switch (Request.Take())
+                {
+                    case Model.Request.RequestId.None:
+                        {
+                            return;  // no request at this time -> we can leave immediately
+                        }
+                    case Model.Request.RequestId.Delete:
+                        {
+                            Model.DeleteDWG.Delete(uiapp, dwg);
+                            break;
+                        }
+                    case Model.Request.RequestId.TextNote:
+                        {
+                            Model.TextNoteObject.Place(uiapp);
+                            break;
+                        }
+                    default:
+                        {
+                            // some kind of a warning here should
+                            // notify us about an unexpected request 
+                            break;
+                        }
+                }
             }
+            finally
+            {
+                //Application.thisApp.WakeFormUp();
+            }
+
+
+
 
 
         }

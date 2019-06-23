@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
+using System.Windows;
 
+
+// C:\Revit 2019.2 SDK\Samples\ModelessDialog\ModelessForm_ExternalEvent
 
 namespace JuneWPF.ViewModel
 {
@@ -80,12 +83,20 @@ namespace JuneWPF.ViewModel
             //ListCollectionView collectionView = new ListCollectionView(employees);
         }
 
+        private void MakeRequest(Model.Request.RequestId request)
+        {
+            handler.Request.Make(request);
+            exEvent.Raise();
+            //DozeOff();
+        }
+
         private void DeleteDWG()
         {
             if (this.SelectedDWG != null)
             {
                 handler.dwg = SelectedDWG.DWGElement;
-                exEvent.Raise();
+                //exEvent.Raise();
+                MakeRequest(Model.Request.RequestId.Delete);
                 DwgList.Remove(SelectedDWG);
             }
             else
@@ -103,7 +114,7 @@ namespace JuneWPF.ViewModel
             DwgList = Model.FindDWG.listEmployees(uidoc.Document);
         }
 
-        public RelayCommand MyRelayCommand {
+        public RelayCommand PlaceTextNodeCommand {
 
             get
             {
@@ -115,7 +126,14 @@ namespace JuneWPF.ViewModel
 
         private void LaunchCommand()
         {
-            TaskDialog.Show("sss", "aaa");
+            MakeRequest(Model.Request.RequestId.TextNote);
+            /*
+            string textBox1 = "";
+            if (Clipboard.GetDataObject().GetDataPresent(DataFormats.Text))
+                textBox1 = Clipboard.GetDataObject().GetData(DataFormats.Text).ToString();
+            else
+                textBox1 = "The clipboad does not contain any text";
+            TaskDialog.Show("sss", textBox1);*/
         }
 
 
