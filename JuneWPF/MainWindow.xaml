@@ -14,10 +14,16 @@
     </Window.DataContext>
 
         
-        <StackPanel Margin="10">
+        <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="290"/>
+            
+        </Grid.RowDefinitions>
         
-        <ProgressBar Value="{Binding Progress}" Height="25" Margin="10"/>
-        <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+            <!--<ProgressBar Value="{Binding Progress}" Height="25" Margin="10"/>-->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10,0,0,0">
             <Button Content="Update TextNote" Width="100" Height="35"     Command="{Binding UpdateTextNodeCommand}" Margin="0,0,10,0"/>
 
             <Button Content="Place TextNote" Width="100" Height="35"     Command="{Binding PlaceTextNodeCommand}" Margin="0,0,10,0"/>
@@ -34,14 +40,12 @@
                 <TextBox Text="{Binding LeaderLength}" TextAlignment="Center" Height="16"/>
             </StackPanel>
         </StackPanel>
-
-        <Separator Height="10"/>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Refresh DWG List" Width="100" Height="35" Command="{Binding SelectCommand}" Margin="5,0,5,0"/>
             <Button Content="Open View" Width="100" Height="35" Command="{Binding OpenCommand}"/>
             <Button Content="Delete DWG" Width="100" Height="35" Command="{Binding DeleteCommand}" Margin=" 5,0,5,0" />
         </StackPanel>
-        <Separator Height="10"/>
+
         <!--<ListView ItemsSource="{Binding nvc}">
                 <ListView.View>
                 <GridView>
@@ -50,8 +54,13 @@
                 </GridView>
             </ListView.View>
         </ListView>-->
-        <DataGrid ItemsSource="{Binding DwgList}" CanUserAddRows="False" SelectionMode="Single" SelectedItem="{Binding SelectedDWG}" />
+    
+            <DataGrid Grid.Row="2" ItemsSource="{Binding DwgList}" CanUserAddRows="False" SelectionMode="Single" SelectedItem="{Binding SelectedDWG}"       ScrollViewer.CanContentScroll="True" 
+      ScrollViewer.VerticalScrollBarVisibility="Visible"
+      />
+
+        </Grid>
         
-    </StackPanel>
+
    
 </Window>
