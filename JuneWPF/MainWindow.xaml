@@ -43,6 +43,7 @@
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Refresh DWG List" Width="100" Height="35" Command="{Binding SelectCommand}" Margin="5,0,5,0"/>
             <Button Content="Open View" Width="100" Height="35" Command="{Binding OpenCommand}"/>
+            <Button Content="Zoom to DWG" Width="100" Height="35" Command="{Binding ZoomCommand}" Margin=" 5,0,5,0"/>
             <Button Content="Delete DWG" Width="100" Height="35" Command="{Binding DeleteCommand}" Margin=" 5,0,5,0" />
         </StackPanel>
 

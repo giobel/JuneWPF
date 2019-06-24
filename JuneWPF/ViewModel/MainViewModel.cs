@@ -24,6 +24,7 @@ namespace JuneWPF.ViewModel
 
         public RelayCommand SelectCommand { get; }
         public RelayCommand OpenCommand { get; }
+        public RelayCommand ZoomCommand { get; }
         public RelayCommand DeleteCommand { get; }
 
         private UIDocument uidoc = null;
@@ -85,10 +86,16 @@ namespace JuneWPF.ViewModel
 
             SelectCommand = new RelayCommand(() => HandleSelect());
             OpenCommand = new RelayCommand(() => OpenView());
+            ZoomCommand = new RelayCommand(() => Zoom());
             DeleteCommand = new RelayCommand(() => DeleteDWG());
 
             
             //ListCollectionView collectionView = new ListCollectionView(employees);
+        }
+
+        private void Zoom()
+        {
+            uidoc.ShowElements(SelectedDWG.DWGElement);
         }
 
         private void MakeRequest(Model.Request.RequestId request)
@@ -115,7 +122,6 @@ namespace JuneWPF.ViewModel
         {
             uidoc.Application.ActiveUIDocument.ActiveView = SelectedDWG.ViewElement;
         }
-
 
         private void HandleSelect()
         {
