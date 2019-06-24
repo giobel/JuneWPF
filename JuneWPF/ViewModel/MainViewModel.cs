@@ -38,6 +38,8 @@ namespace JuneWPF.ViewModel
 
         public bool TextArrowLeft { get; set; }
         public bool TextArrowRight { get; set; }
+        public double TextWidth { get; set; }
+        public double LeaderLength { get; set; }
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
@@ -77,6 +79,9 @@ namespace JuneWPF.ViewModel
             exEvent = ExternalEvent.Create(handler);
 
             uidoc = Command._activeRevitUIDoc;
+
+            TextWidth = 1.2;
+            LeaderLength = 3;
 
             SelectCommand = new RelayCommand(() => HandleSelect());
             OpenCommand = new RelayCommand(() => OpenView());
@@ -118,13 +123,23 @@ namespace JuneWPF.ViewModel
         }
 
         public RelayCommand PlaceTextNodeCommand {
-
             get
             {
                 return new RelayCommand(LaunchCommand);
             }
+        }
 
+        public RelayCommand UpdateTextNodeCommand
+        {
+            get
+            {
+                return new RelayCommand(UpdateNoteCommand);
+            }
+        }
 
+        private void UpdateNoteCommand()
+        {
+            MakeRequest(Model.Request.RequestId.UpdateNote);
         }
 
         private void LaunchCommand()
@@ -145,7 +160,8 @@ namespace JuneWPF.ViewModel
             {
                 handler.NoteLeaderPosition = Model.TextNoteObject.TextLeaderPosition.None;
             }
-
+            handler.m_TextNoteWidth = TextWidth;
+            handler.m_LeaderLenght = LeaderLength;
             
             MakeRequest(Model.Request.RequestId.TextNote);
             /*

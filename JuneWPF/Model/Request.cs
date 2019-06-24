@@ -32,7 +32,9 @@ namespace JuneWPF.Model
             /// </summary>
             Delete = 1,
 
-            TextNote = 2
+            TextNote = 2,
+
+            UpdateNote = 3
            
         }
     }

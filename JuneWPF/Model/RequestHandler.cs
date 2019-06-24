@@ -17,6 +17,9 @@ namespace JuneWPF.Model
 
         public Model.TextNoteObject.TextLeaderPosition NoteLeaderPosition {get; set;}
 
+        public double m_TextNoteWidth { get; set; }
+        public double m_LeaderLenght { get; set; }
+
         public Request Request
         {
             get
@@ -41,7 +44,12 @@ namespace JuneWPF.Model
                         }
                     case Model.Request.RequestId.TextNote:
                         {
-                            Model.TextNoteObject.Place(uiapp, NoteLeaderPosition);
+                            Model.TextNoteObject.Place(uiapp, NoteLeaderPosition, m_TextNoteWidth, m_LeaderLenght);
+                            break;
+                        }
+                    case Model.Request.RequestId.UpdateNote:
+                        {
+                            Model.TextNoteObject.Update(uiapp);
                             break;
                         }
                     default:

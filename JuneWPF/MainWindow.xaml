@@ -18,11 +18,20 @@
         
         <ProgressBar Value="{Binding Progress}" Height="25" Margin="10"/>
         <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+            <Button Content="Update TextNote" Width="100" Height="35"     Command="{Binding UpdateTextNodeCommand}" Margin="0,0,10,0"/>
+
             <Button Content="Place TextNote" Width="100" Height="35"     Command="{Binding PlaceTextNodeCommand}" Margin="0,0,10,0"/>
             <StackPanel VerticalAlignment="Center">
                 <CheckBox Content="Left Arrow" IsChecked="{Binding TextArrowLeft}"/>
                 <CheckBox Content="Right Arrow" IsChecked="{Binding TextArrowRight}"/>
-
+            </StackPanel>
+            <StackPanel VerticalAlignment="Center" Margin="10,0,0,0">
+                <TextBlock Text="Text Width:" />
+                <TextBlock Text="Leader Length:"/>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Center" Margin="10,0,0,0" Width="30">
+                <TextBox TextAlignment="Center" Margin="0,0,0,2" Height="16" TextOptions.TextFormattingMode="Display" Text="{Binding TextWidth}"/>
+                <TextBox Text="{Binding LeaderLength}" TextAlignment="Center" Height="16"/>
             </StackPanel>
         </StackPanel>
 

@@ -20,7 +20,7 @@ namespace JuneWPF.Model
             None = 3
         }
 
-        public static void Place(UIApplication uiapp, TextLeaderPosition _textLeader)
+        public static void Place(UIApplication uiapp, TextLeaderPosition _textLeader, double _textWidth, double _leaderLength)
         {
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Document doc = uidoc.Document;
@@ -42,45 +42,97 @@ namespace JuneWPF.Model
             XYZ q = corners[1];
             XYZ v = q - p;
             XYZ center = p + 0.5 * v;
-
-            using (Transaction tran = new Transaction(doc, "Creating a Text note"))
+            try
             {
-                if (Clipboard.GetDataObject().GetDataPresent(DataFormats.Text))
+                using (Transaction tran = new Transaction(doc, "Text note created"))
                 {
-                    string textNoteContent = Clipboard.GetDataObject().GetData(DataFormats.Text).ToString();
-
-                    XYZ origin = new XYZ(10, 10, 0);
-                    //double width = 3.0 / 12.0; // feet on paper
-
-                    TextNoteOptions options = new TextNoteOptions();
-                    options.HorizontalAlignment = HorizontalTextAlignment.Left;
-                    
-                    options.TypeId = doc.GetDefaultElementTypeId(ElementTypeGroup.TextNoteType);
-
-                    tran.Start();
-                    TextNote note = TextNote.Create(doc, doc.ActiveView.Id, center, textNoteContent, options);
-
-                    if (_textLeader == TextLeaderPosition.Both)
+                    if (Clipboard.GetDataObject().GetDataPresent(DataFormats.Text))
                     {
-                        note.AddLeader(TextNoteLeaderTypes.TNLT_STRAIGHT_L);
-                        note.AddLeader(TextNoteLeaderTypes.TNLT_STRAIGHT_R);
+                        string textNoteContent = Clipboard.GetDataObject().GetData(DataFormats.Text).ToString();
+
+                        //double width = 3.0 / 12.0; // feet on paper
+
+                        TextNoteOptions options = new TextNoteOptions();
+                        options.HorizontalAlignment = HorizontalTextAlignment.Left;
+                        
+                        options.TypeId = doc.GetDefaultElementTypeId(ElementTypeGroup.TextNoteType);
+                        double noteWidth = _textWidth/12;
+
+                        tran.Start();
+                        TextNote note = TextNote.Create(doc, doc.ActiveView.Id, center, textNoteContent, options);
+                        note.Width = noteWidth;
+
+                        
+
+                        if (_textLeader == TextLeaderPosition.Both)
+                        {
+                            note.AddLeader(TextNoteLeaderTypes.TNLT_STRAIGHT_L);
+                            Leader lead = note.AddLeader(TextNoteLeaderTypes.TNLT_STRAIGHT_R);
+                            note.LeaderLeftAttachment = LeaderAtachement.TopLine;
+                            note.LeaderRightAttachment = LeaderAtachement.TopLine;
+                            note.Width = noteWidth;
+
+                            lead.End = new XYZ(center.X + _leaderLength, center.Y - 0.8, center.Z);
+
+                        }
+                        else if (_textLeader == TextLeaderPosition.Left)
+                        {
+                            note.AddLeader(TextNoteLeaderTypes.TNLT_STRAIGHT_L);
+                            note.LeaderLeftAttachment = LeaderAtachement.TopLine;
+                            note.Width = noteWidth;
+                        }
+                        else if (_textLeader == TextLeaderPosition.Right)
+                        {
+                            Leader lead = note.AddLeader(TextNoteLeaderTypes.TNLT_STRAIGHT_R);
+                            note.LeaderRightAttachment = LeaderAtachement.TopLine;
+                            note.Width = noteWidth;
+
+
+                            //lead.Elbow = new XYZ(center.X, center.Y, center.Z);
+                            
+                            lead.End = new XYZ(center.X+ _leaderLength, center.Y-0.8, center.Z);
+                        }
+
+                        tran.Commit();
                     }
-                    else if (_textLeader == TextLeaderPosition.Left)
+                    else
                     {
-                        note.AddLeader(TextNoteLeaderTypes.TNLT_STRAIGHT_L);
+                        TaskDialog.Show("Warning", "Clipboard is empty. Try to copy something.");
                     }
-                    else if (_textLeader == TextLeaderPosition.Right)
-                    {
-                        note.AddLeader(TextNoteLeaderTypes.TNLT_STRAIGHT_R);
-                    }
-                    
-                    tran.Commit();
-                }
-                else
-                {
-                    TaskDialog.Show("Warning", "Clipboard is empty. Try to copy something.");
                 }
             }
+            catch (Exception ex)
+            {
+                TaskDialog.Show("Error", ex.Message);
+            }
+            
         }
-    }
-}
+
+        public static void Update(UIApplication uiapp)
+        {
+            Document doc = uiapp.ActiveUIDocument.Document;
+            ElementId eid = uiapp.ActiveUIDocument.Selection.GetElementIds().FirstOrDefault();
+
+            try
+            {
+                using (Transaction tran = new Transaction(doc, "Text note updated"))
+                {
+                    if (Clipboard.GetDataObject().GetDataPresent(DataFormats.Text))
+                    {
+                        tran.Start();
+                        string textNoteContent = Clipboard.GetDataObject().GetData(DataFormats.Text).ToString();
+                        TextNote existingNote = doc.GetElement(eid) as TextNote;
+                        existingNote.Text = textNoteContent;
+                        tran.Commit();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TaskDialog.Show("Error", ex.Message);
+            }
+
+        }//close method
+
+    }//close class
+}//close namespace
