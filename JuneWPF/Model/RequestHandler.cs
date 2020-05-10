@@ -15,7 +15,7 @@ namespace JuneWPF.Model
 
         public Element dwg { get; set; }
 
-        public Model.TextNoteObject.TextLeaderPosition NoteLeaderPosition {get; set;}
+        public TextNoteObject.TextLeaderPosition NoteLeaderPosition {get; set;}
 
         public double m_TextNoteWidth { get; set; }
         public double m_LeaderLenght { get; set; }

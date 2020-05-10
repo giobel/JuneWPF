@@ -55,8 +55,7 @@ namespace JuneWPF
 
         public JtWindowHandle(IntPtr h)
         {
-            Debug.Assert(IntPtr.Zero != h,
-              "expected non-null window handle");
+            Debug.Assert(IntPtr.Zero != h, "expected non-null window handle");
 
             _hwnd = h;
         }
