@@ -54,6 +54,7 @@ namespace JuneWPF.Model
                         }
                     case Model.Request.RequestId.BackToSheet:
                         {
+                            Model.TextNoteObject.OpenSheet(uiapp);
                             break;
                         }
                     default:

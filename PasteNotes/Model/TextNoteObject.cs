@@ -159,12 +159,40 @@ namespace JuneWPF.Model
 
                 uiview.Close();
 
-                uidoc.ActiveView = (currentView);
+                uidoc.ActiveView = currentView;
             }
             catch
             {
 
             }
+        }
+
+        public static void OpenSheet(UIApplication uiapp)
+        {
+            UIDocument uidoc = uiapp.ActiveUIDocument;
+            Document doc = uidoc.Document;
+            try
+            {
+                string sheetNumber = doc.ActiveView.get_Parameter(BuiltInParameter.VIEWPORT_SHEET_NUMBER).AsString();
+
+                ViewSheet viewSh = null;
+
+                FilteredElementCollector sheets = new FilteredElementCollector(doc).OfClass(typeof(ViewSheet));
+
+                foreach (ViewSheet sht in sheets)
+                {
+                    if (sht.SheetNumber == sheetNumber)
+                    {
+                        viewSh = sht;
+                        break;
+                    }
+                        
+                }
+
+                uidoc.ActiveView = viewSh;
+
+            }
+            catch { }
         }
     }//close class
 }//close namespace

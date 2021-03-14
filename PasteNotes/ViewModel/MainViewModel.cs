@@ -84,7 +84,6 @@ namespace JuneWPF.ViewModel
                 return new RelayCommand(LaunchCommand);
             }
         }
-
         public RelayCommand UpdateTextNodeCommand
         {
             get
@@ -92,7 +91,6 @@ namespace JuneWPF.ViewModel
                 return new RelayCommand(UpdateNoteCommand);
             }
         }
-
         public RelayCommand OpenViewCommand
         {
             get
@@ -100,15 +98,12 @@ namespace JuneWPF.ViewModel
                 return new RelayCommand(OpenCommand);
             }
         }
-
-        private void OpenCommand()
+        public RelayCommand OpenSheetCommand
         {
-            MakeRequest(Model.Request.RequestId.OpenView);
-        }
-
-        private void UpdateNoteCommand()
-        {
-            MakeRequest(Model.Request.RequestId.UpdateNote);
+            get
+            {
+                return new RelayCommand(OpenSheet);
+            }
         }
 
         private void LaunchCommand()
@@ -131,7 +126,7 @@ namespace JuneWPF.ViewModel
             }
             handler.m_TextNoteWidth = TextWidth;
             handler.m_LeaderLenght = LeaderLength;
-            
+
             MakeRequest(Model.Request.RequestId.TextNote);
             /*
             string textBox1 = "";
@@ -140,7 +135,21 @@ namespace JuneWPF.ViewModel
             else
                 textBox1 = "The clipboad does not contain any text";
             TaskDialog.Show("sss", textBox1);*/
+        }        
+        private void UpdateNoteCommand()
+        {
+            MakeRequest(Model.Request.RequestId.UpdateNote);
         }
+        private void OpenCommand()
+        {
+            MakeRequest(Model.Request.RequestId.OpenView);
+        }
+        private void OpenSheet()
+        {
+            MakeRequest(Model.Request.RequestId.BackToSheet);
+        }
+
+
 
 
     }
