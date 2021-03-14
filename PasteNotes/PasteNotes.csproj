@@ -13,11 +13,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CDF2C10D-8CF9-41EA-B355-0831DAD2693D}</ProjectGuid>
+    <ProjectGuid>{D7B9B23B-99FC-465F-9F61-E78C6C2AC873}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JuneWPF</RootNamespace>
-    <AssemblyName>JuneWPF</AssemblyName>
+    <RootNamespace>PasteNotes</RootNamespace>
+    <AssemblyName>PasteNotes</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -83,6 +83,8 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Xaml" />
+    <Reference Include="UIAutomationClient" />
+    <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -91,9 +93,6 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\DeleteDWG.cs" />
-    <Compile Include="Model\DWGcontainer.cs" />
-    <Compile Include="Model\FindDWG.cs" />
     <Compile Include="Model\TextNoteObject.cs" />
     <Compile Include="Model\Request.cs" />
     <Compile Include="Model\RequestHandler.cs" />
@@ -102,7 +101,7 @@
     <Compile Include="ViewModel\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="JuneWPF.addin" />
+    <Content Include="PasteNotes.addin" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

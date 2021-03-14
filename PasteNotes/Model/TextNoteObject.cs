@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Automation;
 
 namespace JuneWPF.Model
 {
@@ -33,6 +34,7 @@ namespace JuneWPF.Model
                 }
             }
 
+            
 
             IList<XYZ> corners = uiview.GetZoomCorners();
             XYZ p = corners[0];
@@ -132,5 +134,37 @@ namespace JuneWPF.Model
 
         }//close method
 
+        public static void OpenView(UIApplication uiapp)
+        {
+            UIDocument uidoc = uiapp.ActiveUIDocument;
+            Document doc = uidoc.Document;
+
+            try
+            {
+                IList<UIView> uiviews = uidoc.GetOpenUIViews();
+
+                UIView uiview = null;
+
+                View currentView = null;
+
+                foreach (UIView uv in uiviews)
+                {
+                    if (uv.ViewId.Equals(doc.ActiveView.Id))
+                    {
+                        currentView = doc.ActiveView;
+                        uiview = uv;
+                        break;
+                    }
+                }
+
+                uiview.Close();
+
+                uidoc.ActiveView = (currentView);
+            }
+            catch
+            {
+
+            }
+        }
     }//close class
 }//close namespace

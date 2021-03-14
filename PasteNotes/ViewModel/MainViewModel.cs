@@ -22,18 +22,9 @@ namespace JuneWPF.ViewModel
         public string WindowTitle { get; private set; }
         public int Progress { get; set; }
 
-        public RelayCommand SelectCommand { get; }
-        public RelayCommand OpenCommand { get; }
-        public RelayCommand ZoomCommand { get; }
-        public RelayCommand DeleteCommand { get; }
-
         private UIDocument uidoc = null;
         public List<KeyValuePair<string, string>> nvc { get; set; }
         public string _result { get; set; }
-
-        public ObservableCollection<Model.DWGcontainer> DwgList { get; set; }
-
-        public Model.DWGcontainer SelectedDWG { get; set; }
 
         private Model.RequestHandler handler { get; set; }
 
@@ -64,17 +55,7 @@ namespace JuneWPF.ViewModel
             //    });
             //}
             WindowTitle = "Paste TextNote From Clipboard";
-            Task.Delay(500).ContinueWith(t =>
-            {
-                while (Progress < 100)
-                {
-                    Progress += 15;
-                    Task.Delay(100).Wait();
-                }
-            });
-
-            DwgList = new ObservableCollection<Model.DWGcontainer>();
-
+            
             handler = new Model.RequestHandler();
 
             exEvent = ExternalEvent.Create(handler);
@@ -83,20 +64,10 @@ namespace JuneWPF.ViewModel
 
             TextWidth = 1.2;
             LeaderLength = 3;
-
-            SelectCommand = new RelayCommand(() => HandleSelect());
-            OpenCommand = new RelayCommand(() => OpenView());
-            ZoomCommand = new RelayCommand(() => Zoom());
-            DeleteCommand = new RelayCommand(() => DeleteDWG());
-
-            
+                     
             //ListCollectionView collectionView = new ListCollectionView(employees);
         }
 
-        private void Zoom()
-        {
-            uidoc.ShowElements(SelectedDWG.DWGElement);
-        }
 
         private void MakeRequest(Model.Request.RequestId request)
         {
@@ -105,28 +76,7 @@ namespace JuneWPF.ViewModel
             //DozeOff();
         }
 
-        private void DeleteDWG()
-        {
-            if (this.SelectedDWG != null)
-            {
-                handler.dwg = SelectedDWG.DWGElement;
-                //exEvent.Raise();
-                MakeRequest(Model.Request.RequestId.Delete);
-                DwgList.Remove(SelectedDWG);
-            }
-            else
-                TaskDialog.Show("Error", "DWG not selected");
-        }
 
-        private void OpenView()
-        {
-            uidoc.Application.ActiveUIDocument.ActiveView = SelectedDWG.ViewElement;
-        }
-
-        private void HandleSelect()
-        {
-            DwgList = Model.FindDWG.listEmployees(uidoc.Document);
-        }
 
         public RelayCommand PlaceTextNodeCommand {
             get
@@ -141,6 +91,19 @@ namespace JuneWPF.ViewModel
             {
                 return new RelayCommand(UpdateNoteCommand);
             }
+        }
+
+        public RelayCommand OpenViewCommand
+        {
+            get
+            {
+                return new RelayCommand(OpenCommand);
+            }
+        }
+
+        private void OpenCommand()
+        {
+            MakeRequest(Model.Request.RequestId.OpenView);
         }
 
         private void UpdateNoteCommand()
