@@ -121,8 +121,11 @@ namespace JuneWPF.Model
                     {
                         tran.Start();
                         string textNoteContent = Clipboard.GetDataObject().GetData(DataFormats.Text).ToString();
-                        TextNote existingNote = doc.GetElement(eid) as TextNote;
-                        existingNote.Text = textNoteContent;
+                        if (eid != null)
+                        {
+                            TextNote existingNote = doc.GetElement(eid) as TextNote;
+                            existingNote.Text = textNoteContent;
+                        }
                         tran.Commit();
                     }
                 }

@@ -54,7 +54,7 @@ namespace JuneWPF.ViewModel
             //        }
             //    });
             //}
-            WindowTitle = "Paste TextNote From Clipboard";
+            WindowTitle = "Place TextNote From Clipboard";
             
             handler = new Model.RequestHandler();
 
