@@ -197,5 +197,5 @@ namespace JuneWPF.Model
             }
             catch { }
         }
-    }//close class
-}//close namespace
+    }
+}

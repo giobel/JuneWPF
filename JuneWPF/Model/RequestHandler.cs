@@ -64,11 +64,6 @@ namespace JuneWPF.Model
             {
                 //Application.thisApp.WakeFormUp();
             }
-
-
-
-
-
         }
 
         public string GetName()
